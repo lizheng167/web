@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://v3.bootcss.com/examples/dashboard/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <title>火车时刻表</title>
+
+
+   {% load staticfiles %}
+
+   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >
+
+   <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" >
+
+   <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+
+   <script href="{% static 'js/ie-emulation-modes-warning.js' %}" ></script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="http://v3.bootcss.com/examples/dashboard/#">火车时刻表</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1 main">
+
+          <h2 class="sub-header">火车时刻表</h2>
+
+          <form id="search-form" class="form-inline simple_form" action="" >
+            <div class="form-group">
+                <lable for="id_query">始&nbsp;发&nbsp;&nbsp;：</lable>
+                <input id="id_query" type="text" class="form-control" style="text-align: center;" name="start" required placeholder="北京">
+            </div>
+            <div class="form-group">
+                <lable for="id_query">到&nbsp;达&nbsp;&nbsp;：</lable>
+                <input id="id_query" type="text" class="form-control" style="text-align: center;" name="end" required placeholder="上海虹桥">
+            </div>
+            <button type="submit" class="btn btn-default">
+              <i class="fa fa-search"></i>
+            </button>
+            </form>
+
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>车次</th>
+                  <th>始发站/到达站</th>
+                  <th>出发时间/到达时间</th>
+                  <th>历时</th>
+                  <th>一等座</th>
+                  <th>二等座</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for sat in article_list %}
+                <tr>
+                  <td>{{ sat.id }}</td>
+                  <td>{{ sat.station_train_code }}</td>
+                  <td>{{ sat.start_station_name }}-{{ sat.end_station_name }}</td>
+                  <td>{{ sat.start_time }}－{{ sat.arrive_time }}</td>
+                  <td>{{ sat.lishi }}</td>
+                  <td>{{ sat.zy_num }}</td>
+                  <td>{{ sat.ze_num }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+            <div id="pagination">
+                            <ul id="pagination-flickr">
+                            {% if article_list.has_previous %}
+                            <li class="previous"><a href="?page={{ article_list.previous_page_number }}">&laquo;上一页</a></li>
+                            {% else %}
+                            <li class="previous-off">&laquo;上一页</li>
+                            {% endif %}
+                             <li class="active">{{ article_list.number }}/{{ article_list.paginator.num_pages }}</li>
+                            {% if article_list.has_next %}
+                              <li class="next"><a href="?page={{ article_list.next_page_number }}">下一页 &raquo;</a></li>
+                            {% else %}
+                              <li class="next-off">下一页 &raquo;</li>
+                            {% endif %}
+                           </ul>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+   <script href="{% static 'js/jquery.min.js' %}" ></script>
+   <script href="{% static 'js/bootstrap.min.js' %}" ></script>
+
+  
+    </body></html>
